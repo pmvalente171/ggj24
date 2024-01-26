@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerMov : MonoBehaviour
 {
-    [SerializeField] private float footRotationSpeed = 10f;
+    [SerializeField] private float startRotationSpeed = 10f;
+    [SerializeField] private float rotationSpeed = 4f;
     [SerializeField] private Transform LeftFoot;
     [SerializeField] private Transform RightFoot;
     
@@ -22,21 +23,39 @@ public class PlayerMov : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.D))
         {
-            _leftFootRotation += footRotationSpeed * Time.deltaTime;
+            _leftFootRotation = 0f;
         }
-        if (Input.GetKeyDown(KeyCode.O))
+        
+        if (Input.GetKeyUp(KeyCode.O) || Input.GetKeyUp(KeyCode.K))
         {
-            _rightFootRotation += footRotationSpeed * Time.deltaTime;
+            _rightFootRotation = 0f;
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        
+        if (Input.GetKey(KeyCode.W))
         {
-            _leftFootRotation -= footRotationSpeed * Time.deltaTime;
+            _leftFootRotation -= startRotationSpeed * Time.deltaTime;
+            _leftFootRotation = Mathf.Clamp(_leftFootRotation, -1, 1);
+            return;
         }
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKey(KeyCode.O))
         {
-            _rightFootRotation -= footRotationSpeed * Time.deltaTime;
+            _rightFootRotation += startRotationSpeed * Time.deltaTime;
+            _rightFootRotation = Mathf.Clamp(_rightFootRotation, -1, 1);
+            return;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            _leftFootRotation += startRotationSpeed * Time.deltaTime;
+            _leftFootRotation = Mathf.Clamp(_leftFootRotation, -1, 1);
+            return;
+        }
+        if (Input.GetKey(KeyCode.K))
+        {
+            _rightFootRotation -= startRotationSpeed * Time.deltaTime;
+            _rightFootRotation = Mathf.Clamp(_rightFootRotation, -1, 1);
+            return;
         }
     }
     
@@ -53,8 +72,8 @@ public class PlayerMov : MonoBehaviour
     private void FixedUpdate()
     {
         // Rotate the left foot
-        RotateAroundPoint(_rigidbody, LeftFoot.position, Vector3.up, _leftFootRotation);
+        RotateAroundPoint(_rigidbody, LeftFoot.position, Vector3.up, _leftFootRotation * rotationSpeed);
         // Rotate the right foot
-        RotateAroundPoint(_rigidbody, RightFoot.position, Vector3.up, _rightFootRotation);
+        RotateAroundPoint(_rigidbody, RightFoot.position, Vector3.up, _rightFootRotation * rotationSpeed);
     }
 }
