@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public virtual void Die()
     {
         Debug.Log("Enemy died!");
+        EnemySpawner.Instance.enemyCount--; // singleton
         Destroy(this.gameObject);
     }
 }
