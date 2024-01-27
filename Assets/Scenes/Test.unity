@@ -1047,9 +1047,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   firstGoal: {fileID: 1600462857}
-  speed: 6
-  switchGoalDistance: 7.5
+  speed: 4
+  switchGoalDistance: 5
   transitionSpeed: 1
+  strafeMagnitude: 1
+  strafeRotationFactor: 0.5
 --- !u!1 &1394040297
 GameObject:
   m_ObjectHideFlags: 0
