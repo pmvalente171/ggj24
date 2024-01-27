@@ -72,3 +72,7 @@ crashlytics-build.properties
 
 
 local.txt
+/.idea/ggj24.iml
+/.idea/modules.xml
+/.idea/vcs.xml
+/.idea/workspace.xml

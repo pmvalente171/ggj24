@@ -18,6 +18,8 @@ namespace Player
         [SerializeField] private float maxRecoil = 0.1f;
         [Space] [SerializeField] private RecoilEvent onRecoil;
 
+        [SerializeField] private KillStreakCounter killStreakCounter;
+
         private bool _isRecoiling;
         public float _recoilAmmount;
         
@@ -53,6 +55,10 @@ namespace Player
                     {
                         damageableComponent.TakeDamage(1);
                     }
+                    KillStreakCounter.increaseKillStreak();
+                } else
+                {
+                    KillStreakCounter.resetKillStreak();
                 }
             }
         }
