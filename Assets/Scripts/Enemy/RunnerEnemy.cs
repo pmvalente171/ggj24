@@ -17,6 +17,8 @@ public class RunnerEnemy : Enemy
     [SerializeField] private float strafeMagnitude = 5f;
     [SerializeField] private float strafeRotationFactor = 0.5f; 
     [SerializeField] private float bumpForce = 20f;
+    private float xScale;
+    [SerializeField] private Transform transformToFlip; // sorry
 
     private void Start()
     {
@@ -33,6 +35,11 @@ public class RunnerEnemy : Enemy
         {
             this.currentGoal = player;
         }
+        if (this.transformToFlip == null)
+        {
+            print("No transform to flip set on the runner enemy. Fixme!!");
+        }
+        this.xScale = this.transformToFlip.localScale.x;
     }
 
     private void Update()
@@ -77,6 +84,13 @@ public class RunnerEnemy : Enemy
         // Sinusoidal side-to-side motion
         float sinValue = Mathf.Sin(Time.time * speed) * strafeMagnitude;
         Vector3 strafeDirection = rightDirection * sinValue;
+
+        Vector3 newScale = this.transformToFlip.localScale;
+        if (sinValue > 0)
+            newScale.x = this.xScale;
+        else
+            newScale.x = -this.xScale;
+        this.transformToFlip.localScale = newScale;
 
         // Combine forward movement with side-to-side strafing
         Vector3 combinedDirection = forwardDirection + strafeDirection;

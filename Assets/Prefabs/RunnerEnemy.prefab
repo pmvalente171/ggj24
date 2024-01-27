@@ -127,6 +127,7 @@ MonoBehaviour:
   strafeMagnitude: 1
   strafeRotationFactor: 0.5
   bumpForce: 20
+  transformToFlip: {fileID: 5199563129531591558}
 --- !u!1 &6894816048375316915
 GameObject:
   m_ObjectHideFlags: 0
