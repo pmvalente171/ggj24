@@ -150,8 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6621563406059782412, guid: 3ede8f0b3cd36c75d8f710715a061003, type: 3}
   bulletSpeed: 10
-  fireRate: 1
-  offScreenFireRate: 4
+  fireRate: 4.2
+  offScreenFireRate: 3.9
   shouldFire: 1
 --- !u!114 &8845866221811916131
 MonoBehaviour:
