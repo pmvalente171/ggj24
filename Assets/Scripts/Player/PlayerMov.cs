@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class PlayerMov : MonoBehaviour
 {
     [Serializable] public class FlagEvent : UnityEvent<Vector2Int> { }
+    [Serializable] public class MomentumEvent : UnityEvent<Vector2> { }
     
     [SerializeField] private bool moveWhenLooking = false;
     [Space] [SerializeField] private float startRotationSpeed = 10f;
@@ -15,10 +16,17 @@ public class PlayerMov : MonoBehaviour
     [SerializeField] private Transform leftFoot;
     [SerializeField] private Transform rightFoot;
     [SerializeField] private float momentumDecayRate = 0.95f;
-    [Space] [SerializeField] private Camera cam;
-    [SerializeField] private float maxCameraRotation = 10f; // tilt the camera along the Z axis
-    [SerializeField] private float cameraRotationSpeed = 10f;
     [Space] [SerializeField] private FlagEvent onFlagChange;
+    [SerializeField] private MomentumEvent onMomentumChange;
+    
+    [Space] [SerializeField] private float staminaChange = 0.5f / 2f; // 0.5f / 2 means it takes 2 seconds to go from 0.5 to 1 or 0.5 to 0
+    [SerializeField] private float staminaRecovery = 0.5f / 4f; // 0.5f / 2 means it takes 2 seconds to go from 0.5 to 1 or 0.5 to 0
+
+    /*
+    * staminaBalance at 0 means the player can't rotate clockwise.
+    * staminaBalance at 1 means the player can't rotate counterclockwise.
+    */
+    [SerializeField] private float staminaBalance = 0.5f;
     
     private Rigidbody _rigidbody;
     private float _leftFootMomentum;
@@ -34,6 +42,8 @@ public class PlayerMov : MonoBehaviour
 
     void Update()
     {
+        float absRecovery = Mathf.Min(staminaRecovery, Mathf.Abs(staminaBalance - 0.5f));
+        staminaBalance += (staminaBalance > 0.5f? -absRecovery : absRecovery) * Time.deltaTime;
         HandleInput();
         ApplyMomentumDecay();
     }
@@ -48,26 +58,37 @@ public class PlayerMov : MonoBehaviour
         
         if (Input.GetKey(KeyCode.W))
         {
-            leftFootMomentum -= startRotationSpeed;
+            staminaBalance += staminaChange * Time.deltaTime;
+            leftFootMomentum -= staminaBalance >= 1 ? 0 
+            : startRotationSpeed * Time.deltaTime * 60f;
             _leftFootFlag = 1;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            leftFootMomentum += startRotationSpeed;
+            staminaBalance -= staminaChange * Time.deltaTime;
+            leftFootMomentum += staminaBalance <= 0 ? 0 
+            : startRotationSpeed * Time.deltaTime * 60f;
             _leftFootFlag = -1;
         }
         if (Input.GetKey(KeyCode.O))
         {
-            rightFootMomentum += startRotationSpeed;
+            staminaBalance -= staminaChange * Time.deltaTime;
+            rightFootMomentum += staminaBalance <= 0 ? 0 
+            : startRotationSpeed * Time.deltaTime * 60f;
             _rightFootFlag = 1;
         }
         if (Input.GetKey(KeyCode.K))
         {
-            rightFootMomentum -= startRotationSpeed;
+            staminaBalance += staminaChange * Time.deltaTime;
+            rightFootMomentum -= staminaBalance >= 1 ? 0 
+            : startRotationSpeed * Time.deltaTime * 60f;
             _rightFootFlag = -1;
         }
+
+        staminaBalance = Mathf.Clamp01(staminaBalance);
         
         onFlagChange.Invoke(new Vector2Int(_leftFootFlag, _rightFootFlag));
+        onMomentumChange.Invoke(new Vector2(_leftFootMomentum, _rightFootMomentum));
         
         if (!moveWhenLooking && 
             ((_rightFootFlag == -1 && _leftFootFlag == -1) || 
@@ -96,6 +117,7 @@ public class PlayerMov : MonoBehaviour
     
     private void FixedUpdate()
     {
+
         RotateAroundPoint(_rigidbody, leftFoot.position, Vector3.up, _leftFootMomentum * rotationSpeed);
         RotateAroundPoint(_rigidbody, rightFoot.position, Vector3.up, _rightFootMomentum * rotationSpeed);
     }
@@ -103,7 +125,7 @@ public class PlayerMov : MonoBehaviour
     private void LateUpdate()
     {
         // Rotate the camera
-        cam.transform.localRotation = Quaternion.Lerp(cam.transform.localRotation, Quaternion.Euler(0f, 0f, 
-            (_leftFootMomentum + _rightFootMomentum) / 2f * maxCameraRotation), cameraRotationSpeed * Time.deltaTime);
+        // cam.transform.localRotation = Quaternion.Lerp(cam.transform.localRotation, Quaternion.Euler(0f, 0f, 
+        //     (_leftFootMomentum + _rightFootMomentum) / 2f * maxCameraRotation), cameraRotationSpeed * Time.deltaTime);
     }
 }

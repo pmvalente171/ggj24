@@ -154,12 +154,15 @@ MonoBehaviour:
   moveWhenLooking: 0
   startRotationSpeed: 0.05
   rotationSpeed: 4
-  leftFoot: {fileID: 0}
-  rightFoot: {fileID: 0}
+  leftFoot: {fileID: 4712280664492046775}
+  rightFoot: {fileID: 265570031394660234}
   momentumDecayRate: 0.93
-  cam: {fileID: 0}
+  cam: {fileID: 924186388591379192}
   maxCameraRotation: 10
   cameraRotationSpeed: 10
+  onFlagChange:
+    m_PersistentCalls:
+      m_Calls: []
   _leftFootFlag: 0
   _rightFootFlag: 1
 --- !u!1 &2542569769525672296
