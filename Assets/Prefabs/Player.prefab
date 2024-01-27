@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 8005290820279347368}
   - component: {fileID: 6094732612530977852}
   - component: {fileID: 4168815688282981180}
+  - component: {fileID: 1765905190071184626}
   - component: {fileID: 644031802965186301}
   m_Layer: 0
   m_Name: Player
@@ -223,6 +224,8 @@ MonoBehaviour:
   staminaChange: 0.25
   staminaRecovery: 0.125
   staminaBalance: 0.5
+  killStreakCounter: {fileID: 1765905190071184626}
+  killStreakImpact: 10
   _leftFootFlag: 0
   _rightFootFlag: 0
 --- !u!114 &4168815688282981180
@@ -288,7 +291,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  killStreakCounter: {fileID: 1765905190071184626}
   _recoilAmmount: 0.15
+--- !u!114 &1765905190071184626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3604851185086583123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8455e4cf091f8c0e6be4a62230db1d23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &644031802965186301
 MonoBehaviour:
   m_ObjectHideFlags: 0
