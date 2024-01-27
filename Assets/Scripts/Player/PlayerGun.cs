@@ -20,6 +20,14 @@ namespace Player
 
         [SerializeField] private KillStreakCounter killStreakCounter;
 
+        [SerializeField] private ScoreCounter scoreCounter;
+
+        [SerializeField] private int enemyKillScore = 1000;
+
+        [SerializeField] private int headshotMultiplier = 2;
+
+        [SerializeField] private float killStreakMultiplier = 0.1f;
+
         private bool _isRecoiling;
         public float _recoilAmmount;
         
@@ -55,7 +63,9 @@ namespace Player
                     {
                         damageableComponent.TakeDamage(1);
                     }
-                    KillStreakCounter.increaseKillStreak();
+                    int killStreak = KillStreakCounter.increaseKillStreak();
+                    int killMultiplier = damageableComponent is EnemyHead ? headshotMultiplier : 1;
+                    ScoreCounter.addScore((int) (killMultiplier * enemyKillScore * (1 + (killStreak - 1) * killStreakMultiplier)));
                 } else
                 {
                     KillStreakCounter.resetKillStreak();
