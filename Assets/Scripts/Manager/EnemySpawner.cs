@@ -33,7 +33,6 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
             if (this.enemyCount < this.maxEnemyCount)
             {
                 float randomValue = Random.value;
-                print(randomValue);
                 if (randomValue <= 0.75f)
                 {
                     SpawnEnemy(this.barrelEnemyPrefab);

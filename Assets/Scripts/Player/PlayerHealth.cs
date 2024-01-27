@@ -24,6 +24,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public virtual void Die()
     {
         print("Player died!");
+        EnemySpawner.Instance.enemyCount = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
