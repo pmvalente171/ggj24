@@ -461,11 +461,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveWhenLooking: 0
-  startRotationSpeed: 2
-  rotationSpeed: 4
+  startRotationSpeed: 0.9
+  rotationSpeed: 2
   leftFoot: {fileID: 742509998}
   rightFoot: {fileID: 983722146}
-  momentumDecayRate: 1.8
+  momentumDecayRate: 0.95
   cam: {fileID: 461547670}
   maxCameraRotation: 10
   cameraRotationSpeed: 10

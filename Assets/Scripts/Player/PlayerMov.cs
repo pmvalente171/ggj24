@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using GameArchitecture.Util;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMov : MonoBehaviour
 {
-    [SerializeField] private bool moveWhenLooking = false; 
+    [Serializable] public class FlagEvent : UnityEvent<Vector2Int> { }
+    
+    [SerializeField] private bool moveWhenLooking = false;
     [Space] [SerializeField] private float startRotationSpeed = 10f;
     [SerializeField] private float rotationSpeed = 4f;
     [SerializeField] private Transform leftFoot;
@@ -15,6 +18,7 @@ public class PlayerMov : MonoBehaviour
     [Space] [SerializeField] private Camera cam;
     [SerializeField] private float maxCameraRotation = 10f; // tilt the camera along the Z axis
     [SerializeField] private float cameraRotationSpeed = 10f;
+    [Space] [SerializeField] private FlagEvent onFlagChange;
     
     private Rigidbody _rigidbody;
     private float _leftFootMomentum;
@@ -45,22 +49,29 @@ public class PlayerMov : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             leftFootMomentum -= startRotationSpeed;
+            _leftFootFlag = 1;
         }
         if (Input.GetKey(KeyCode.D))
         {
             leftFootMomentum += startRotationSpeed;
+            _leftFootFlag = -1;
         }
         if (Input.GetKey(KeyCode.O))
         {
             rightFootMomentum += startRotationSpeed;
+            _rightFootFlag = 1;
         }
         if (Input.GetKey(KeyCode.K))
         {
             rightFootMomentum -= startRotationSpeed;
+            _rightFootFlag = -1;
         }
-
-        _leftFootFlag = Mathf.CeilToInt(Mathf.Sin(Mathf.Ceil(leftFootMomentum)));
-        _rightFootFlag = Mathf.CeilToInt(Mathf.Sin(Mathf.Ceil(rightFootMomentum)));
+        
+        onFlagChange.Invoke(new Vector2Int(_leftFootFlag, _rightFootFlag));
+        
+        if (!moveWhenLooking && 
+            ((_rightFootFlag == -1 && _leftFootFlag == -1) || 
+             (_rightFootFlag == 1 && _leftFootFlag == 1))) return;
         
         _leftFootMomentum = Mathf.Clamp(leftFootMomentum, -1, 1);
         _rightFootMomentum = Mathf.Clamp(rightFootMomentum, -1, 1);
