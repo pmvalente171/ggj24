@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1918165226222225752}
   - component: {fileID: 640692177271653857}
   - component: {fileID: 7773004294285113170}
+  - component: {fileID: 4193982663684674182}
   m_Layer: 0
   m_Name: RunnerEnemy
   m_TagString: Untagged
@@ -106,6 +107,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4193982663684674182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4856511143349716226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7118e771dabadada5a38bdf3dbd0f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
+  firstGoal: {fileID: 0}
+  speed: 4
+  switchGoalDistance: 5
+  transitionSpeed: 1
+  strafeMagnitude: 1
+  strafeRotationFactor: 0.5
+  bumpForce: 20
 --- !u!1 &6894816048375316915
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,6 +139,7 @@ GameObject:
   - component: {fileID: 3464437849098975030}
   - component: {fileID: 6570444246774570944}
   - component: {fileID: 52390603749304351}
+  - component: {fileID: 1343994414939913486}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -134,8 +156,8 @@ Transform:
   m_GameObject: {fileID: 6894816048375316915}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.575, z: 0}
-  m_LocalScale: {x: 0.17142856, y: 0.15, z: 0.49999997}
+  m_LocalPosition: {x: 0, y: 0.65, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1439838750204977201}
@@ -211,3 +233,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1343994414939913486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6894816048375316915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14f46209b7867723d90a798d6195a0ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 4193982663684674182}

@@ -6,7 +6,7 @@ using UnityEngine;
 public class RunnerEnemy : Enemy
 {
     private Transform player;
-    [SerializeField] private Transform firstGoal;
+    private Transform firstGoal;
     private Transform currentGoal;
     private bool reachedFirstGoal = false;
     [SerializeField] private float speed = 15f;
@@ -21,9 +21,12 @@ public class RunnerEnemy : Enemy
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        
-        if (firstGoal != null)
+
+        Transform firstGoalTransform = player.Find("PointInFrontOfPlayer");
+
+        if (firstGoalTransform != null)
         {
+            this.firstGoal = firstGoalTransform;
             this.currentGoal = this.firstGoal;
         }
         else

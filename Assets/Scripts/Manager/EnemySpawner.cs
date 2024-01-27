@@ -5,40 +5,52 @@ using GameArchitecture;
 
 public class EnemySpawner : GenericSingletonClass<EnemySpawner>
 {
-    [SerializeField] GameObject barrelEnemySpawnParent;
-    List<Transform> barrelEnemySpawnPoints = new List<Transform>();
+    [SerializeField] GameObject enemySpawnParent;
+    List<Transform> enemySpawnPoints = new List<Transform>();
     int lastSpawnIndex = 0;
     public int enemyCount = 0;
     [SerializeField] int maxEnemyCount = 5;
 
 
     [SerializeField] GameObject barrelEnemyPrefab;
+    [SerializeField] GameObject runnerEnemyPrefab;
 
 
     void Start()
     {
-        foreach (Transform child in this.barrelEnemySpawnParent.GetComponentsInChildren<Transform>())
+        foreach (Transform child in this.enemySpawnParent.GetComponentsInChildren<Transform>())
         {
-            barrelEnemySpawnPoints.Add(child);
+            enemySpawnPoints.Add(child);
         }
 
-        StartCoroutine(SpawnBarrelCoroutine());
+        StartCoroutine(SpawnEnemyCoroutine());
     }
 
-    private IEnumerator SpawnBarrelCoroutine()
+    private IEnumerator SpawnEnemyCoroutine()
     {
         while (true)
         {
-            if (this.enemyCount < this.maxEnemyCount){
-                SpawnBarrel();
+            if (this.enemyCount < this.maxEnemyCount)
+            {
+                float randomValue = Random.value;
+                print(randomValue);
+                if (randomValue <= 0.75f)
+                {
+                    SpawnEnemy(this.barrelEnemyPrefab);
+                }
+                else
+                {
+                    SpawnEnemy(this.runnerEnemyPrefab);
+                }
             }
             yield return new WaitForSeconds(5f);
         }
     }
 
+
     void Update(){
         if (Input.GetKeyDown(KeyCode.LeftControl) && (this.enemyCount < this.maxEnemyCount)){
-            SpawnBarrel();
+            SpawnEnemy(this.barrelEnemyPrefab);
         }
     }
 
@@ -51,14 +63,14 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
         }
     }
 
-    void SpawnBarrel(){
+    void SpawnEnemy(GameObject enemyPrefab){
         this.enemyCount++;
 
-        int randomIndex = Random.Range(0, barrelEnemySpawnPoints.Count);
-        Vector3 randomSpawnPoint = barrelEnemySpawnPoints[MakeSureItDoesntSpawnInTheSamePlaceTwice(randomIndex)].position;
+        int randomIndex = Random.Range(0, enemySpawnPoints.Count);
+        Vector3 randomSpawnPoint = enemySpawnPoints[MakeSureItDoesntSpawnInTheSamePlaceTwice(randomIndex)].position;
         Vector2 spawnPointIn2D = new Vector2(randomSpawnPoint.x, randomSpawnPoint.z);
-        var enemy = Instantiate(barrelEnemyPrefab, randomSpawnPoint, Quaternion.identity);
-        enemy.GetComponent<BarrelEnemy>().Spawn(spawnPointIn2D);
+        var enemy = Instantiate(enemyPrefab, randomSpawnPoint, Quaternion.identity);
+        enemy.GetComponent<Enemy>().Spawn(spawnPointIn2D);
 
         this.lastSpawnIndex = randomIndex;
     }
