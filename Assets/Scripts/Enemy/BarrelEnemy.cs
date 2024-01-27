@@ -7,11 +7,9 @@ public class BarrelEnemy : Enemy
 {
     [SerializeField] private float spawnHeight = 15f;
 
-    private int health;
-
     void Start()
     {
-        health = 100;
+        base.health = 100;
     }
 
     void Spawn(Vector2 topDownPosition)
@@ -29,8 +27,8 @@ public class BarrelEnemy : Enemy
 
     public void TakeDamage(int damageAmount)
     {
-        health -= damageAmount;
-        if (health <= 0)
+        base.health -= damageAmount;
+        if (base.health <= 0)
         {
             Die();
         }

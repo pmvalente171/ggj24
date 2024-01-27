@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 {
 
-    [SerializeField] private int health = 1;
+    [SerializeField] protected int health = 1;
 
     void Update()
     {
