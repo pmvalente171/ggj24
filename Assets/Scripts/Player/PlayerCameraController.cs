@@ -13,7 +13,9 @@ namespace Player
         [Space] [SerializeField] private float maxCameraRotationZ = 10f;
         [SerializeField] private float maxCameraRotationX = 1f;
          
-        private float _rotationMomentum;
+        private float _recoilModifier;
+        private float _cameraRotationX; // -1 to 1
+        
         private float _leftFootMomentum;
         private float _rightFootMomentum;
         
@@ -23,22 +25,22 @@ namespace Player
 
             if (flag.x == 1 && flag.y == 1)
             {
-                _rotationMomentum -= lookAcc * Time.deltaTime;
+                _cameraRotationX -= lookAcc * Time.deltaTime;
             }
             
             if (flag.x == -1 && flag.y == -1)
             {
-                _rotationMomentum += lookAcc * Time.deltaTime;
+                _cameraRotationX += lookAcc * Time.deltaTime;
             }
 
             // _rotationMomentum -= _rotationMomentum * lookDecayRate * Time.deltaTime * 10f; 
-            _rotationMomentum = Mathf.Clamp(_rotationMomentum, -1, 1);
+            _cameraRotationX = Mathf.Clamp(_cameraRotationX, -1, 1);
         }
 
-        public void AddToMomentum(float amount)
+        public void AddRecoil(float amount)
         {
-            _rotationMomentum += amount;
-            _rotationMomentum = Mathf.Clamp(_rotationMomentum, -1, 1);
+            _cameraRotationX += amount;
+            _cameraRotationX = Mathf.Clamp(_cameraRotationX, -1, 1);
         }
         
         public void SetMomentum(Vector2 momentum)
@@ -60,7 +62,7 @@ namespace Player
         
         private void LateUpdate()
         {
-            AddRotation(_rotationMomentum * lookSpeed);
+            AddRotation(_cameraRotationX * lookSpeed);
         }
     }
 }

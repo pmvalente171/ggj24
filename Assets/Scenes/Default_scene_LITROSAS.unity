@@ -523,7 +523,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 577576622}
         m_TargetAssemblyTypeName: Player.PlayerCameraController, Assembly-CSharp
-        m_MethodName: AddToMomentum
+        m_MethodName: AddRecoil
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

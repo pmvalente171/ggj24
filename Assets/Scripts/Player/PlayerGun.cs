@@ -4,6 +4,7 @@ using GameArchitecture.ScriptablePatterns;
 using GameArchitecture.Util;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -11,27 +12,32 @@ namespace Player
     {
         [Serializable] public class RecoilEvent : UnityEvent<float> { }
         
+        [SerializeField] private AnimationCurve recoilCurve;
         [SerializeField] private Camera playerCamera;
         [Space] [SerializeField] private float recoilTime = 0.5f;
-        [SerializeField] private float recoilAmount = 0.1f;
+        [SerializeField] private float maxRecoil = 0.1f;
         [Space] [SerializeField] private RecoilEvent onRecoil;
 
         private bool _isRecoiling;
-        public float _recoilTimer;
+        public float _recoilAmmount;
         
         private IEnumerator RecoilRoutine()
         {
-            _recoilTimer = 0f;
+            float prevAmmount = 0f;
+            _recoilAmmount = 0f;
+            _isRecoiling = true;
             yield return AnimationUtil.LerpInTimeWindow(recoilTime, f =>
             {
-                _recoilTimer = Mathf.Sin(f * Mathf.PI / 2) * recoilAmount;
-                onRecoil.Invoke(_recoilTimer);
+                _recoilAmmount = recoilCurve.Evaluate(f) * maxRecoil;
+                onRecoil.Invoke(-(_recoilAmmount - prevAmmount));
+                prevAmmount = _recoilAmmount;
             });
+            _isRecoiling = false;
         }
         
         private void Update()
         {
-            if (Input.GetKey(KeyCode.Space) && !_isRecoiling)
+            if (Input.GetKeyDown(KeyCode.Space) && !_isRecoiling)
             {
                 StartCoroutine(RecoilRoutine());
                 
