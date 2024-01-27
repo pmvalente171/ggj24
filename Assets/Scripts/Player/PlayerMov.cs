@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class PlayerMov : MonoBehaviour
 {
-    [SerializeField] private float startRotationSpeed = 10f;
+    [SerializeField] private bool moveWhenLooking = false; 
+    [Space] [SerializeField] private float startRotationSpeed = 10f;
     [SerializeField] private float rotationSpeed = 4f;
     [SerializeField] private Transform leftFoot;
     [SerializeField] private Transform rightFoot;
@@ -19,6 +20,9 @@ public class PlayerMov : MonoBehaviour
     private float _leftFootMomentum;
     private float _rightFootMomentum;
 
+    public int _leftFootFlag = 0;
+    public int _rightFootFlag = 0;
+    
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -32,32 +36,41 @@ public class PlayerMov : MonoBehaviour
 
     private void HandleInput()
     {
+        float leftFootMomentum = _leftFootMomentum;
+        float rightFootMomentum = _rightFootMomentum;
+        
+        _leftFootFlag = 0;
+        _rightFootFlag = 0;
+        
         if (Input.GetKey(KeyCode.W))
         {
-            _leftFootMomentum -= startRotationSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.K))
-        {
-            _leftFootMomentum += startRotationSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.O))
-        {
-            _rightFootMomentum += startRotationSpeed * Time.deltaTime;
+            leftFootMomentum -= startRotationSpeed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            _rightFootMomentum -= startRotationSpeed * Time.deltaTime;
+            leftFootMomentum += startRotationSpeed;
+        }
+        if (Input.GetKey(KeyCode.O))
+        {
+            rightFootMomentum += startRotationSpeed;
+        }
+        if (Input.GetKey(KeyCode.K))
+        {
+            rightFootMomentum -= startRotationSpeed;
         }
 
-        _leftFootMomentum = Mathf.Clamp(_leftFootMomentum, -1, 1);
-        _rightFootMomentum = Mathf.Clamp(_rightFootMomentum, -1, 1);
+        _leftFootFlag = Mathf.CeilToInt(Mathf.Sin(Mathf.Ceil(leftFootMomentum)));
+        _rightFootFlag = Mathf.CeilToInt(Mathf.Sin(Mathf.Ceil(rightFootMomentum)));
+        
+        _leftFootMomentum = Mathf.Clamp(leftFootMomentum, -1, 1);
+        _rightFootMomentum = Mathf.Clamp(rightFootMomentum, -1, 1);
     }
 
     private void ApplyMomentumDecay()
     {
         // Gradually reduce the momentum over time if no input is provided
-        _leftFootMomentum *= momentumDecayRate;
-        _rightFootMomentum *= momentumDecayRate;
+        _leftFootMomentum -= momentumDecayRate * _leftFootMomentum * Time.deltaTime * 5f;
+        _rightFootMomentum -= momentumDecayRate * _rightFootMomentum * Time.deltaTime * 5f;
     }
 
 
@@ -79,7 +92,7 @@ public class PlayerMov : MonoBehaviour
     private void LateUpdate()
     {
         // Rotate the camera
-        cam.transform.localRotation = Quaternion.Lerp(cam.transform.localRotation, Quaternion.Euler(0f, 0f,
-            _leftFootMomentum + -_rightFootMomentum / 2f * maxCameraRotation), cameraRotationSpeed * Time.deltaTime);
+        cam.transform.localRotation = Quaternion.Lerp(cam.transform.localRotation, Quaternion.Euler(0f, 0f, 
+            (_leftFootMomentum + _rightFootMomentum) / 2f * maxCameraRotation), cameraRotationSpeed * Time.deltaTime);
     }
 }

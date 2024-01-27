@@ -460,13 +460,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225e8a7c944bc68439a254444a72b8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveWhenLooking: 0
   startRotationSpeed: 2
   rotationSpeed: 4
-  LeftFoot: {fileID: 742509998}
-  RightFoot: {fileID: 983722146}
+  leftFoot: {fileID: 742509998}
+  rightFoot: {fileID: 983722146}
+  momentumDecayRate: 1.8
   cam: {fileID: 461547670}
   maxCameraRotation: 10
-  cameraRotationSpeed: 2
+  cameraRotationSpeed: 10
+  _leftFootFlag: 0
+  _rightFootFlag: 0
 --- !u!1 &742509997
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 742509998}
   m_Layer: 0
-  m_Name: LeftFood
+  m_Name: LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -492,7 +496,7 @@ Transform:
   m_GameObject: {fileID: 742509997}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: -1, z: 0}
+  m_LocalPosition: {x: -1, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -614,7 +618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 983722146}
   m_Layer: 0
-  m_Name: RightFood
+  m_Name: RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -629,7 +633,7 @@ Transform:
   m_GameObject: {fileID: 983722145}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6, y: -1, z: 0}
+  m_LocalPosition: {x: 1, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
