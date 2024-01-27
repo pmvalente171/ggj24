@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028328, g: 0.22571328, b: 0.3069218, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -515,9 +515,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b55f59d0998c4f7e8cb641fc74111249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recoilCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.660416
+      outSlope: 1.660416
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.087829374
+    - serializedVersion: 3
+      time: 0.6585325
+      value: 1.371034
+      inSlope: 0.7760576
+      outSlope: 0.7760576
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0041809
+      value: 0.739563
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   playerCamera: {fileID: 461547670}
-  recoilTime: 0.5
-  recoilAmount: 10
+  recoilTime: 0.15
+  maxRecoil: 0.15
   onRecoil:
     m_PersistentCalls:
       m_Calls:
@@ -533,6 +566,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _recoilAmmount: 0.15
 --- !u!114 &577576622
 MonoBehaviour:
   m_ObjectHideFlags: 0
