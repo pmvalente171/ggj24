@@ -4,20 +4,31 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    // list of vector3
-    [SerializeField] List<Vector3> spawnPoints = new List<Vector3>();
+    [SerializeField] GameObject barrelEnemySpawnParent;
+    List<Transform> barrelEnemySpawnPoints = new List<Transform>();
+
 
     [SerializeField] GameObject barrelEnemyPrefab;
 
-    void Spawn(){
-        // spawn enemy at random spawn point
-        int randomIndex = Random.Range(0, spawnPoints.Count);
-        Vector3 randomSpawnPoint = spawnPoints[randomIndex];
-        Vector2 in2D = new Vector2(randomSpawnPoint.x, randomSpawnPoint.z);
-        var a = Instantiate(barrelEnemyPrefab, randomSpawnPoint, Quaternion.identity);
-        
 
-        a.GetComponent<BarrelEnemy>().Spawn(in2D);
+    void Start(){
+        foreach (Transform child in this.barrelEnemySpawnParent.GetComponentsInChildren<Transform>()){
+            barrelEnemySpawnPoints.Add(child);
+        }
+    }
+
+    void Update(){
+        if (Input.GetKeyDown(KeyCode.LeftControl)){
+            SpawnBarrel();
+        }
+    }
+
+    void SpawnBarrel(){
+        int randomIndex = Random.Range(0, barrelEnemySpawnPoints.Count);
+        Vector3 randomSpawnPoint = barrelEnemySpawnPoints[randomIndex].position;
+        Vector2 in2D = new Vector2(randomSpawnPoint.x, randomSpawnPoint.z);
+        var enemy = Instantiate(barrelEnemyPrefab, randomSpawnPoint, Quaternion.identity);
+        enemy.GetComponent<BarrelEnemy>().Spawn(in2D);
     }
 
 }
