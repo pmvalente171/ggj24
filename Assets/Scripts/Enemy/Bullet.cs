@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IDamageable
 {
     private void OnCollisionEnter(Collision collision)
     {
@@ -14,4 +14,10 @@ public class Bullet : MonoBehaviour
         }
         Destroy(this.gameObject);
     }
+
+    public virtual void TakeDamage(int damage)
+    {
+        Destroy(this.gameObject);
+    }
+
 }
