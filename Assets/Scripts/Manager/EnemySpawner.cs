@@ -11,6 +11,9 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
     public int enemyCount = 0;
     [SerializeField] int maxEnemyCount = 5;
 
+    [SerializeField] float numEnemiesIntervalImpact = 0.9f;
+
+    [SerializeField] private float baseSpawnInterval = 5f;
 
     [SerializeField] GameObject barrelEnemyPrefab;
 
@@ -32,7 +35,7 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
             if (this.enemyCount < this.maxEnemyCount){
                 SpawnBarrel();
             }
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(computeNextSpawnTime());
         }
     }
 
@@ -61,6 +64,12 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
         enemy.GetComponent<BarrelEnemy>().Spawn(spawnPointIn2D);
 
         this.lastSpawnIndex = randomIndex;
+    }
+
+    private float computeNextSpawnTime(){
+        float timer = baseSpawnInterval * Mathf.Pow(numEnemiesIntervalImpact, (maxEnemyCount - enemyCount) - 1);
+        Debug.Log("Next spawn time is " + timer);
+        return timer;
     }
 
 }
