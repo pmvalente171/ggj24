@@ -62,10 +62,10 @@ namespace Player
                     if (damageableComponent != null)
                     {
                         damageableComponent.TakeDamage(1);
+                        int killStreak = KillStreakCounter.increaseKillStreak();
+                        int killMultiplier = damageableComponent is EnemyHead ? headshotMultiplier : 1;
+                        ScoreCounter.addScore((int) (killMultiplier * enemyKillScore * (1 + (killStreak - 1) * killStreakMultiplier)));
                     }
-                    int killStreak = KillStreakCounter.increaseKillStreak();
-                    int killMultiplier = damageableComponent is EnemyHead ? headshotMultiplier : 1;
-                    ScoreCounter.addScore((int) (killMultiplier * enemyKillScore * (1 + (killStreak - 1) * killStreakMultiplier)));
                 } else
                 {
                     KillStreakCounter.resetKillStreak();
