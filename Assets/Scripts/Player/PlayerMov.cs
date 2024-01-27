@@ -62,7 +62,8 @@ public class PlayerMov : MonoBehaviour
         _rightFootFlag = 0;
 
 
-        float rotationSpeedIncrease = startRotationSpeed + KillStreakCounter.getKillStreak() * killStreakImpact;
+        float rotationSpeedIncrease = Mathf.Min(startRotationSpeed + KillStreakCounter.getKillStreak() * killStreakImpact, 
+                                                startRotationSpeed * 1.5f);
         Debug.Log(rotationSpeedIncrease);
 
         if (Input.GetKey(KeyCode.W))
