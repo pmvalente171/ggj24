@@ -4,25 +4,12 @@ using UnityEngine;
 
 public class EnemyHead : MonoBehaviour, IDamageable
 {
-    private Enemy theEnemy;
-
-    void Start()
-    {
-        this.theEnemy = GetComponentInParent<Enemy>();
-    }
+    [SerializeField] private Enemy enemy;
 
     public virtual void TakeDamage(int damage)
     {
-        this.theEnemy.Die();
-    }
-
-
-    void Update(){
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {   
-            Debug.Log("HEADHSOT!!!");
-            this.TakeDamage(1000);
-        }
+        print("HEADSHOT");
+        this.enemy.Die();
     }
 }
     

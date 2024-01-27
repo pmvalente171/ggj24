@@ -7,11 +7,6 @@ public class BarrelEnemy : Enemy
 {
     [SerializeField] private float spawnHeight = 15f;
 
-    void Start()
-    {
-        base.health = 100;
-    }
-
     void Spawn(Vector2 topDownPosition)
     {
         this.gameObject.SetActive(true);

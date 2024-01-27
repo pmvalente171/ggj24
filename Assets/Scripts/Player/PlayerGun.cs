@@ -33,19 +33,19 @@ namespace Player
         {
             if (Input.GetKey(KeyCode.Space) && !_isRecoiling)
             {
-                StartCoroutine(RecoilRoutine());
+                //StartCoroutine(RecoilRoutine());
                 
-                // Cast a ray from the center of the screen
                 var ray = playerCamera.ScreenPointToRay(
                     new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
-                
-                // If the ray hits something
+
+                Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
+
                 if (Physics.Raycast(ray, out var hit))
-                {
-                    // If the ray hits an enemy
-                    if (hit.collider.CompareTag("Enemy"))
+                {   
+                    var damageableComponent = hit.collider.GetComponent<IDamageable>();
+                    if (damageableComponent != null)
                     {
-                        // TODO: Damage the enemy
+                        damageableComponent.TakeDamage(1);
                     }
                 }
             }

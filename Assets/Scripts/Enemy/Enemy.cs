@@ -7,14 +7,6 @@ public class Enemy : MonoBehaviour, IDamageable
 
     [SerializeField] protected int health = 1;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(1);
-        }
-    }
-
     public virtual void TakeDamage(int damage)
     {
         this.health -= damage;

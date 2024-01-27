@@ -123,6 +123,30 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &166541470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2182125649317478041, guid: 2327bc9380b927b29aa6971f2b58f559, type: 3}
+  m_PrefabInstance: {fileID: 495452421211905841}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &166541477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166541470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b55f59d0998c4f7e8cb641fc74111249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 2062362915}
+  recoilTime: 0.5
+  recoilAmount: 0.1
+  onRecoil:
+    m_PersistentCalls:
+      m_Calls: []
+  _recoilTimer: 0
 --- !u!1 &363146695
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f46209b7867723d90a798d6195a0ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 1800542178}
 --- !u!1 &449304134
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +709,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2182125649317478041, guid: 2327bc9380b927b29aa6971f2b58f559, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 166541477}
   m_SourcePrefab: {fileID: 100100000, guid: 2327bc9380b927b29aa6971f2b58f559, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
