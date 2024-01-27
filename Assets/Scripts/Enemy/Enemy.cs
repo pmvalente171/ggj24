@@ -7,14 +7,15 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private int health = 1;
 
-    void Update(){
+    void Update()
+    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage(1);
         }
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         this.health -= damage;
 
@@ -22,12 +23,11 @@ public class Enemy : MonoBehaviour
         {
             Die();
         }
-        Debug.Log("Enemy took " + damage + " damage! It has " + this.health + " health left!!");
     }
 
-    private void Die()
+    public virtual void Die()
     {
         Debug.Log("Enemy died!");
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 }
