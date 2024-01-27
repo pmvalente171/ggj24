@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using GameArchitecture.Util;
 using UnityEngine;
 
 public class PlayerMov : MonoBehaviour
@@ -8,7 +11,10 @@ public class PlayerMov : MonoBehaviour
     [SerializeField] private Transform leftFoot;
     [SerializeField] private Transform rightFoot;
     [SerializeField] private float momentumDecayRate = 0.95f;
-
+    [Space] [SerializeField] private Camera cam;
+    [SerializeField] private float maxCameraRotation = 10f; // tilt the camera along the Z axis
+    [SerializeField] private float cameraRotationSpeed = 10f;
+    
     private Rigidbody _rigidbody;
     private float _leftFootMomentum;
     private float _rightFootMomentum;
@@ -30,7 +36,7 @@ public class PlayerMov : MonoBehaviour
         {
             _leftFootMomentum -= startRotationSpeed * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.K))
         {
             _leftFootMomentum += startRotationSpeed * Time.deltaTime;
         }
@@ -38,7 +44,7 @@ public class PlayerMov : MonoBehaviour
         {
             _rightFootMomentum += startRotationSpeed * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.K))
+        if (Input.GetKey(KeyCode.D))
         {
             _rightFootMomentum -= startRotationSpeed * Time.deltaTime;
         }
@@ -54,11 +60,6 @@ public class PlayerMov : MonoBehaviour
         _rightFootMomentum *= momentumDecayRate;
     }
 
-    private void FixedUpdate()
-    {
-        RotateAroundPoint(_rigidbody, leftFoot.position, Vector3.up, _leftFootMomentum * rotationSpeed);
-        RotateAroundPoint(_rigidbody, rightFoot.position, Vector3.up, _rightFootMomentum * rotationSpeed);
-    }
 
     private void RotateAroundPoint(Rigidbody rigidbody, Vector3 point, Vector3 axis, float angle)
     {
@@ -67,5 +68,18 @@ public class PlayerMov : MonoBehaviour
         Vector3 rotatedPointToFoot = rotation * pointToFoot;
         rigidbody.position = point + rotatedPointToFoot;
         rigidbody.rotation *= rotation;
+    }
+    
+    private void FixedUpdate()
+    {
+        RotateAroundPoint(_rigidbody, leftFoot.position, Vector3.up, _leftFootMomentum * rotationSpeed);
+        RotateAroundPoint(_rigidbody, rightFoot.position, Vector3.up, _rightFootMomentum * rotationSpeed);
+    }
+
+    private void LateUpdate()
+    {
+        // Rotate the camera
+        cam.transform.localRotation = Quaternion.Lerp(cam.transform.localRotation, Quaternion.Euler(0f, 0f,
+            _leftFootMomentum + -_rightFootMomentum / 2f * maxCameraRotation), cameraRotationSpeed * Time.deltaTime);
     }
 }

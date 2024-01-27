@@ -1,16 +1,15 @@
 using System;
+using GameArchitecture.Util;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace GameArchitecture
 {
-    public class App : GenericSingletonClass<App>
+    public class App : MonoBehaviour
     {
-        // [Header("Input Manager")]
-        // [SerializeField] private InputProvider provider = null;
-
-
+        private static App _instance;
+        
         private void Start()
         {
 #if UNITY_EDITOR
@@ -18,17 +17,13 @@ namespace GameArchitecture
             {
                 case 0:
                     // main menu
-                    // TODO : Remove this later
-                    // provider.ChangeCurrentState(InputProvider.CreateGameplayMiddleWare());
                     break;
                 default:
                     // it's a gameplay scene
-                    // provider.ChangeCurrentState(InputProvider.CreateGameplayMiddleWare());
                     break;
             } 
 #else
-            // Load the default manner
-            // provider.ChangeCurrentState(InputProvider.CreateNoInput());
+            // Load the default method
 #endif
         }
 
@@ -42,8 +37,8 @@ namespace GameArchitecture
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Bootstrap()
         {
-            if (Instantiate(Resources.Load("App")) is not GameObject app)
-                throw new ApplicationException();
+            // Load the singleton instance
+            _instance = SingletonUtil.LoadSingletonInstance<App>();
 
 #if UNITY_EDITOR
             switch (SceneManager.GetActiveScene().buildIndex)
@@ -59,9 +54,5 @@ namespace GameArchitecture
             // Load the default manner
 #endif
         }
-
-        // public void ChangeCurrentState(List<InputMiddleware> newValue) => provider.ChangeCurrentState(newValue);
-        
-        // public void ChangeCurrentState(InputMiddleware newValue) => provider.ChangeCurrentState(newValue);
     }
 }

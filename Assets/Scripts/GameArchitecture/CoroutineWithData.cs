@@ -5,21 +5,21 @@ namespace GameArchitecture
 {
     public class CoroutineWithData
     {
-        public Coroutine coroutine { get; private set; }
-        public object Result;
-        private IEnumerator target;
+        public Coroutine Coroutine { get; private set; }
+        public object result;
+        private readonly IEnumerator _target;
         public CoroutineWithData(MonoBehaviour owner, IEnumerator target)
         {
-            this.target = target;
-            coroutine = owner.StartCoroutine(Run());
+            _target = target;
+            Coroutine = owner.StartCoroutine(Run());
         }
 
         private IEnumerator Run()
         {
-            while (target.MoveNext())
+            while (_target.MoveNext())
             {
-                Result = target.Current;
-                yield return Result;
+                result = _target.Current;
+                yield return result;
             }
         }
     }
