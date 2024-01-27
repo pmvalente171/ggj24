@@ -323,6 +323,8 @@ GameObject:
   - component: {fileID: 577576616}
   - component: {fileID: 577576615}
   - component: {fileID: 577576620}
+  - component: {fileID: 577576621}
+  - component: {fileID: 577576622}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -461,16 +463,94 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveWhenLooking: 0
-  startRotationSpeed: 0.9
-  rotationSpeed: 2
+  startRotationSpeed: 0.05
+  rotationSpeed: 4
   leftFoot: {fileID: 742509998}
   rightFoot: {fileID: 983722146}
-  momentumDecayRate: 0.95
-  cam: {fileID: 461547670}
-  maxCameraRotation: 10
-  cameraRotationSpeed: 10
+  momentumDecayRate: 0.93
+  onFlagChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 577576622}
+        m_TargetAssemblyTypeName: Player.PlayerCameraController, Assembly-CSharp
+        m_MethodName: SetFlag
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onMomentumChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 577576622}
+        m_TargetAssemblyTypeName: Player.PlayerCameraController, Assembly-CSharp
+        m_MethodName: SetMomentum
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  staminaChange: 0.25
+  staminaRecovery: 0.125
+  staminaBalance: 0.5
   _leftFootFlag: 0
   _rightFootFlag: 0
+--- !u!114 &577576621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577576614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b55f59d0998c4f7e8cb641fc74111249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 461547670}
+  recoilTime: 0.5
+  recoilAmount: 10
+  onRecoil:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 577576622}
+        m_TargetAssemblyTypeName: Player.PlayerCameraController, Assembly-CSharp
+        m_MethodName: AddToMomentum
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &577576622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577576614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33cfdac8239d4db78e2dbc0a34f3908b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 461547668}
+  lookAcc: 0.6
+  lookSpeed: 3
+  lookDecayRate: 0.93
+  maxCameraRotationZ: 10
+  maxCameraRotationX: 45
 --- !u!1 &742509997
 GameObject:
   m_ObjectHideFlags: 0
