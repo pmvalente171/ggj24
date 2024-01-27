@@ -53,7 +53,6 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
 
     void SpawnBarrel(){
         this.enemyCount++;
-        print(this.enemyCount);
 
         int randomIndex = Random.Range(0, barrelEnemySpawnPoints.Count);
         Vector3 randomSpawnPoint = barrelEnemySpawnPoints[MakeSureItDoesntSpawnInTheSamePlaceTwice(randomIndex)].position;
