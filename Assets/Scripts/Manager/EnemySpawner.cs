@@ -5,9 +5,15 @@ using GameArchitecture;
 
 public class EnemySpawner : GenericSingletonClass<EnemySpawner>
 {
-    [SerializeField] GameObject barrelEnemySpawnParent;
-    List<Transform> barrelEnemySpawnPoints = new List<Transform>();
-    int lastSpawnIndex = 0;
+
+    [SerializeField] Transform topLeft;
+
+    [SerializeField] Transform bottomRight;
+
+    [SerializeField] Transform playerPos;
+
+    //[SerializeField] Transform playerPos;
+    
     public int enemyCount = 0;
     [SerializeField] int maxEnemyCount = 5;
 
@@ -17,14 +23,14 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
 
     [SerializeField] GameObject barrelEnemyPrefab;
 
+    private float left, right, top, bottom;
 
     void Start()
     {
-        foreach (Transform child in this.barrelEnemySpawnParent.GetComponentsInChildren<Transform>())
-        {
-            barrelEnemySpawnPoints.Add(child);
-        }
-
+        left = topLeft.position.x;
+        right = bottomRight.position.x;
+        top = topLeft.position.z;
+        bottom = bottomRight.position.z;
         StartCoroutine(SpawnBarrelCoroutine());
     }
 
@@ -45,25 +51,15 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
         }
     }
 
-    private int MakeSureItDoesntSpawnInTheSamePlaceTwice(int index){
-        if (index == this.lastSpawnIndex){
-            return index + 1;
-        }
-        else {
-            return index;
-        }
-    }
-
     void SpawnBarrel(){
         this.enemyCount++;
-
-        int randomIndex = Random.Range(0, barrelEnemySpawnPoints.Count);
-        Vector3 randomSpawnPoint = barrelEnemySpawnPoints[MakeSureItDoesntSpawnInTheSamePlaceTwice(randomIndex)].position;
+        float playerAdvance = playerPos.position.z;
+        float randomX = Random.Range(left, right);
+        float randomZ = playerAdvance + Random.Range(top, bottom);
+        Vector3 randomSpawnPoint = new Vector3(randomX, 0, randomZ);
         Vector2 spawnPointIn2D = new Vector2(randomSpawnPoint.x, randomSpawnPoint.z);
         var enemy = Instantiate(barrelEnemyPrefab, randomSpawnPoint, Quaternion.identity);
         enemy.GetComponent<BarrelEnemy>().Spawn(spawnPointIn2D);
-
-        this.lastSpawnIndex = randomIndex;
     }
 
     private float computeNextSpawnTime(){
