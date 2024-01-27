@@ -151,14 +151,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225e8a7c944bc68439a254444a72b8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startRotationSpeed: 2
+  moveWhenLooking: 0
+  startRotationSpeed: 0.05
   rotationSpeed: 4
-  leftFoot: {fileID: 4712280664492046775}
-  rightFoot: {fileID: 265570031394660234}
+  leftFoot: {fileID: 0}
+  rightFoot: {fileID: 0}
   momentumDecayRate: 0.93
-  cam: {fileID: 924186388591379192}
+  cam: {fileID: 0}
   maxCameraRotation: 10
   cameraRotationSpeed: 10
+  _leftFootFlag: 0
+  _rightFootFlag: 1
 --- !u!1 &2542569769525672296
 GameObject:
   m_ObjectHideFlags: 0
