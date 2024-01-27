@@ -30,7 +30,7 @@ public class PlayerMov : MonoBehaviour
 
     [SerializeField] private KillStreakCounter killStreakCounter;
 
-    [SerializeField] private float killStreakImpact = 0.1f;
+    [SerializeField] private float killStreakImpact = 0.0015f;
 
     
     private Rigidbody _rigidbody;
@@ -61,8 +61,10 @@ public class PlayerMov : MonoBehaviour
         _leftFootFlag = 0;
         _rightFootFlag = 0;
 
+
         float rotationSpeedIncrease = startRotationSpeed + KillStreakCounter.getKillStreak() * killStreakImpact;
-        
+        Debug.Log(rotationSpeedIncrease);
+
         if (Input.GetKey(KeyCode.W))
         {
             staminaBalance += staminaChange * Time.deltaTime;
@@ -70,7 +72,7 @@ public class PlayerMov : MonoBehaviour
             : rotationSpeedIncrease * Time.deltaTime * 60f;
             _leftFootFlag = 1;
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             staminaBalance -= staminaChange * Time.deltaTime;
             leftFootMomentum += staminaBalance <= 0 ? 0 
