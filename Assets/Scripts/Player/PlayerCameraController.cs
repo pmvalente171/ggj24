@@ -35,6 +35,12 @@ namespace Player
             _rotationMomentum = Mathf.Clamp(_rotationMomentum, -1, 1);
         }
 
+        public void AddToMomentum(float amount)
+        {
+            _rotationMomentum += amount;
+            _rotationMomentum = Mathf.Clamp(_rotationMomentum, -1, 1);
+        }
+        
         public void SetMomentum(Vector2 momentum)
         {
             _leftFootMomentum = momentum.x;
