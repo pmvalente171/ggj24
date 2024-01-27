@@ -2,20 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHead : MonoBehaviour
+public class EnemyHead : MonoBehaviour, IDamageable
 {
-    private Enemy parentComponent;
+    private Enemy theEnemy;
 
     void Start()
     {
-        this.parentComponent = GetComponentInParent<Enemy>();
+        this.theEnemy = GetComponentInParent<Enemy>();
     }
+
+    public virtual void TakeDamage(int damage)
+    {
+        this.theEnemy.Die();
+    }
+
 
     void Update(){
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {   
             Debug.Log("HEADHSOT!!!");
-            this.parentComponent.TakeDamage(1000);
+            this.TakeDamage(1000);
         }
     }
 }

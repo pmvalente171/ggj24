@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamageable
 {
 
     [SerializeField] private int health = 1;
@@ -28,6 +28,6 @@ public class Enemy : MonoBehaviour
     public virtual void Die()
     {
         Debug.Log("Enemy died!");
-        this.gameObject.SetActive(false);
+        Destroy(this.gameObject);
     }
 }
