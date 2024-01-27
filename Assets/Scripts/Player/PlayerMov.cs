@@ -45,22 +45,29 @@ public class PlayerMov : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             leftFootMomentum -= startRotationSpeed;
+            _leftFootFlag = 1;
         }
         if (Input.GetKey(KeyCode.D))
         {
             leftFootMomentum += startRotationSpeed;
+            _leftFootFlag = -1;
         }
         if (Input.GetKey(KeyCode.O))
         {
             rightFootMomentum += startRotationSpeed;
+            _rightFootFlag = 1;
         }
         if (Input.GetKey(KeyCode.K))
         {
             rightFootMomentum -= startRotationSpeed;
+            _rightFootFlag = -1;
         }
-
-        _leftFootFlag = Mathf.CeilToInt(Mathf.Sin(Mathf.Ceil(leftFootMomentum)));
-        _rightFootFlag = Mathf.CeilToInt(Mathf.Sin(Mathf.Ceil(rightFootMomentum)));
+        
+        print($"Left foot flag: {_leftFootFlag}, Right foot flag: {_rightFootFlag}");
+        
+        if (!moveWhenLooking && 
+            ((_rightFootFlag == -1 && _leftFootFlag == -1) || 
+             (_rightFootFlag == 1 && _leftFootFlag == 1))) return;
         
         _leftFootMomentum = Mathf.Clamp(leftFootMomentum, -1, 1);
         _rightFootMomentum = Mathf.Clamp(rightFootMomentum, -1, 1);
