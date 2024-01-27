@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     void Update(){
-        if (Input.GetKeyDown(KeyCode.LeftControl)){
+        if (Input.GetKeyDown(KeyCode.Y) || Input.GetKeyDown(KeyCode.LeftAlt)){
             SpawnBarrel();
         }
     }

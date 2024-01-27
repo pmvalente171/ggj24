@@ -94,6 +94,9 @@ public class PlayerMov : MonoBehaviour
 
         staminaBalance = Mathf.Clamp01(staminaBalance);
         
+        _leftFootMomentum = Mathf.Clamp(leftFootMomentum, -1, 1);
+        _rightFootMomentum = Mathf.Clamp(rightFootMomentum, -1, 1);
+        
         onFlagChange.Invoke(new Vector2Int(_leftFootFlag, _rightFootFlag));
         onMomentumChange.Invoke(new Vector2(_leftFootMomentum, _rightFootMomentum));
         
@@ -101,8 +104,6 @@ public class PlayerMov : MonoBehaviour
             ((_rightFootFlag == -1 && _leftFootFlag == -1) || 
              (_rightFootFlag == 1 && _leftFootFlag == 1))) return;
         
-        _leftFootMomentum = Mathf.Clamp(leftFootMomentum, -1, 1);
-        _rightFootMomentum = Mathf.Clamp(rightFootMomentum, -1, 1);
     }
 
     private void ApplyMomentumDecay()
