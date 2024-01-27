@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using GameArchitecture.Util;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMov : MonoBehaviour
 {
-    [SerializeField] private bool moveWhenLooking = false; 
+    [Serializable] public class FlagEvent : UnityEvent<Vector2Int> { }
+    
+    [SerializeField] private bool moveWhenLooking = false;
     [Space] [SerializeField] private float startRotationSpeed = 10f;
     [SerializeField] private float rotationSpeed = 4f;
     [SerializeField] private Transform leftFoot;
@@ -15,6 +18,7 @@ public class PlayerMov : MonoBehaviour
     [Space] [SerializeField] private Camera cam;
     [SerializeField] private float maxCameraRotation = 10f; // tilt the camera along the Z axis
     [SerializeField] private float cameraRotationSpeed = 10f;
+    [Space] [SerializeField] private FlagEvent onFlagChange;
     
     private Rigidbody _rigidbody;
     private float _leftFootMomentum;
@@ -63,7 +67,7 @@ public class PlayerMov : MonoBehaviour
             _rightFootFlag = -1;
         }
         
-        print($"Left foot flag: {_leftFootFlag}, Right foot flag: {_rightFootFlag}");
+        onFlagChange.Invoke(new Vector2Int(_leftFootFlag, _rightFootFlag));
         
         if (!moveWhenLooking && 
             ((_rightFootFlag == -1 && _leftFootFlag == -1) || 
