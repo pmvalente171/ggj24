@@ -7,7 +7,7 @@ public class BarrelEnemy : Enemy
 {
     [SerializeField] private float spawnHeight = 15f;
 
-    void Spawn(Vector2 topDownPosition)
+    public void Spawn(Vector2 topDownPosition)
     {
         this.gameObject.SetActive(true);
         Vector3 spawnPosition = new Vector3(topDownPosition.x, spawnHeight, topDownPosition.y);
