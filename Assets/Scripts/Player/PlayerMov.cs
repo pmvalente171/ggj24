@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameArchitecture.Util;
 using UnityEngine;
 
 public class PlayerMov : MonoBehaviour
@@ -26,12 +27,12 @@ public class PlayerMov : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.K))
         {
             _leftFootRotation = 0f;
         }
         
-        if (Input.GetKeyUp(KeyCode.O) || Input.GetKeyUp(KeyCode.K))
+        if (Input.GetKeyUp(KeyCode.O) || Input.GetKeyUp(KeyCode.D))
         {
             _rightFootRotation = 0f;
         }
@@ -50,14 +51,14 @@ public class PlayerMov : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
-            _leftFootRotation += startRotationSpeed * Time.deltaTime;
-            _leftFootRotation = Mathf.Clamp(_leftFootRotation, -1, 1);
+            _rightFootRotation -= startRotationSpeed * Time.deltaTime;
+            _rightFootRotation = Mathf.Clamp(_rightFootRotation, -1, 1);
             return;
         }
         if (Input.GetKey(KeyCode.K))
         {
-            _rightFootRotation -= startRotationSpeed * Time.deltaTime;
-            _rightFootRotation = Mathf.Clamp(_rightFootRotation, -1, 1);
+            _leftFootRotation += startRotationSpeed * Time.deltaTime;
+            _leftFootRotation = Mathf.Clamp(_leftFootRotation, -1, 1);
             return;
         }
     }
@@ -85,6 +86,6 @@ public class PlayerMov : MonoBehaviour
     {
         // Rotate the camera
         cam.transform.localRotation = Quaternion.Lerp(cam.transform.localRotation, Quaternion.Euler(0f, 0f,
-            (_leftFootRotation + -_rightFootRotation) / 2f * maxCameraRotation), cameraRotationSpeed * Time.deltaTime);
+            _leftFootRotation + -_rightFootRotation / 2f * maxCameraRotation), cameraRotationSpeed * Time.deltaTime);
     }
 }
