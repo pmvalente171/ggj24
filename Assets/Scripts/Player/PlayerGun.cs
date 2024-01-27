@@ -39,7 +39,7 @@ namespace Player
         {
             if (Input.GetKeyDown(KeyCode.Space) && !_isRecoiling)
             {
-                //StartCoroutine(RecoilRoutine());
+                StartCoroutine(RecoilRoutine());
                 
                 var ray = playerCamera.ScreenPointToRay(
                     new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
