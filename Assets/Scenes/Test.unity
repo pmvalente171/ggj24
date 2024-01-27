@@ -1046,7 +1046,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
+  firstGoal: {fileID: 1600462857}
   speed: 6
+  switchGoalDistance: 7.5
+  transitionSpeed: 1
 --- !u!1 &1394040297
 GameObject:
   m_ObjectHideFlags: 0
@@ -1140,6 +1143,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 848753399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1600462857 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2072814951129159392, guid: 2327bc9380b927b29aa6971f2b58f559, type: 3}
+  m_PrefabInstance: {fileID: 7670825616172379495}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1674675994
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,7 +1375,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1439838750204977201, guid: cb120de0c478b5950bdabbec27866c3c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.3
+      value: 26.94
       objectReference: {fileID: 0}
     - target: {fileID: 1439838750204977201, guid: cb120de0c478b5950bdabbec27866c3c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1375,7 +1383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1439838750204977201, guid: cb120de0c478b5950bdabbec27866c3c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 31.4
+      value: -1.26
       objectReference: {fileID: 0}
     - target: {fileID: 1439838750204977201, guid: cb120de0c478b5950bdabbec27866c3c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1451,6 +1459,10 @@ PrefabInstance:
     - target: {fileID: -3216235642248304954, guid: 2327bc9380b927b29aa6971f2b58f559, type: 3}
       propertyPath: m_Size.z
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2072814951129159392, guid: 2327bc9380b927b29aa6971f2b58f559, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3604851185086583123, guid: 2327bc9380b927b29aa6971f2b58f559, type: 3}
       propertyPath: m_Name
