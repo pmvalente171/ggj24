@@ -464,6 +464,9 @@ MonoBehaviour:
   rotationSpeed: 4
   LeftFoot: {fileID: 742509998}
   RightFoot: {fileID: 983722146}
+  cam: {fileID: 461547670}
+  maxCameraRotation: 4
+  cameraRotationSpeed: 2
 --- !u!1 &742509997
 GameObject:
   m_ObjectHideFlags: 0

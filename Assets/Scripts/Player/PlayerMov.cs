@@ -9,6 +9,9 @@ public class PlayerMov : MonoBehaviour
     [SerializeField] private float rotationSpeed = 4f;
     [SerializeField] private Transform LeftFoot;
     [SerializeField] private Transform RightFoot;
+    [Space] [SerializeField] private Camera cam;
+    [SerializeField] private float maxCameraRotation = 10f; // tilt the camera along the Z axis
+    [SerializeField] private float cameraRotationSpeed = 10f;
     
     private Rigidbody _rigidbody;
     private float _leftFootRotation;
@@ -75,5 +78,13 @@ public class PlayerMov : MonoBehaviour
         RotateAroundPoint(_rigidbody, LeftFoot.position, Vector3.up, _leftFootRotation * rotationSpeed);
         // Rotate the right foot
         RotateAroundPoint(_rigidbody, RightFoot.position, Vector3.up, _rightFootRotation * rotationSpeed);
+        
+    }
+
+    private void LateUpdate()
+    {
+        // Rotate the camera
+        cam.transform.localRotation = Quaternion.Lerp(cam.transform.localRotation, Quaternion.Euler(0f, 0f,
+            (_leftFootRotation + -_rightFootRotation) / 2f * maxCameraRotation), cameraRotationSpeed * Time.deltaTime);
     }
 }
