@@ -7,6 +7,11 @@ public class ScoreCounter : MonoBehaviour
 
     
     [SerializeField] private static int _score = 0;
+    
+    public static void ResetScore()
+    {
+        _score = 0;
+    }
 
     public static int addScore(int amount)
     {

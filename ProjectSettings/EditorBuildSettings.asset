@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Intro_Cinematic.unity
+    guid: e856b0f188e3ef4fa998ae4af9ee4bca
+  - enabled: 1
+    path: Assets/Scenes/TownLevel.unity
+    guid: 90fc1fd7ded39da2f8b9bb46a61f16f2
   m_configObjects: {}

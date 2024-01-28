@@ -1,11 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-
     [SerializeField] protected int health = 1;
+
+    private Barks _barks;
+    
+    private void Awake()
+    {
+        _barks = FindObjectOfType<Barks>();
+    }
 
     public virtual void TakeDamage(int damage)
     {
@@ -23,6 +32,8 @@ public class Enemy : MonoBehaviour, IDamageable
         //EnemySpawner.Instance.enemyCount--; // singleton
         EnemySpawner.Instance.notifyEnemyDeath(this.gameObject);
         Destroy(this.gameObject);
+        ParticleManager.PlayParticle("WoodExplosion", transform.position);
+        if (Random.Range(0f, 1f) < 0.15f) _barks.Bark();
     }
 
     public virtual void Spawn(Vector3 position){

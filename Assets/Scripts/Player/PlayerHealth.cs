@@ -42,6 +42,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         print("Player died!");
         EnemySpawner.Instance.enemyCount = 0;
+        ScoreCounter.ResetScore();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        EnemySpawner.Instance.Reset();
     }
 }

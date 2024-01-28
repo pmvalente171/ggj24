@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameArchitecture;
+using Random = UnityEngine.Random;
 
 public class EnemySpawner : GenericSingletonClass<EnemySpawner>
 {
@@ -10,7 +12,7 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
 
     [SerializeField] Transform bottomRight;
 
-    [SerializeField] Transform playerPos;
+    [SerializeField] public Transform playerPos;
     
     public int enemyCount = 0;
     [SerializeField] int maxEnemyCount = 5;
@@ -25,18 +27,24 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
 
     private Dictionary<int, Transform> enemies = new Dictionary<int, Transform>();
 
-    void Start()
+    public void Reset()
     {
         left = topLeft.position.x;
         right = bottomRight.position.x;
         top = topLeft.position.z;
         bottom = bottomRight.position.z;
+        enemies = new Dictionary<int, Transform>();
         SpawnLocator barrelSpawner = GetComponent<BarrelSpawner>();
         SpawnLocator runningSpawner = GetComponent<RunningSpawner>();
         SpawnLocator flyingSpawner = GetComponent<FlyingSpawner>();
         spawnLocators = new SpawnLocator[] {barrelSpawner, runningSpawner, flyingSpawner};
         
         StartCoroutine(SpawnCoroutine());
+    }
+
+    void Start()
+    {
+        Reset();
     }
 
     private IEnumerator SpawnCoroutine()
@@ -53,12 +61,6 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
         }
     }
 
-    void Update(){
-        if (Input.GetKeyDown(KeyCode.Y) && (this.enemyCount < this.maxEnemyCount)){
-            Spawn();
-        }
-    }
-
     void Spawn(){
         float[] probabilities = {0.75f, 0.9f, 1f};
         float random = Random.Range(0f, 1f);
@@ -67,6 +69,12 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
             index++;
         }
         this.enemyCount++;
+        
+        // if (playerPos is null)
+        // {
+        //     playerPos = FindObjectOfType<PlayerMov>().transform;
+        // }
+        
         float playerAdvance = playerPos.position.z;
         Vector3 randomSpawnPoint;
         int tries = 3;

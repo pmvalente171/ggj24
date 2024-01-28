@@ -12,6 +12,10 @@ namespace Player
     {
         [Serializable] public class RecoilEvent : UnityEvent<float> { }
         
+        public AudioSource audioSource;
+        public AudioClip shootSound;
+        [Space]
+        public ParticleSystem muzzleFlash;
         [SerializeField] private AnimationCurve recoilCurve;
         [SerializeField] private Camera playerCamera;
         [Space] [SerializeField] private float recoilTime = 0.5f;
@@ -34,6 +38,8 @@ namespace Player
         
         private IEnumerator RecoilRoutine()
         {
+            muzzleFlash.Play();
+            audioSource.Play(0);
             float prevAmmount = 0f;
             _recoilAmmount = 0f;
             _isRecoiling = true;

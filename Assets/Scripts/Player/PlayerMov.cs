@@ -43,6 +43,7 @@ public class PlayerMov : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        EnemySpawner.Instance.playerPos = transform;
     }
 
     void Update()

@@ -226,6 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 379634642}
+  - component: {fileID: 379634643}
   m_Layer: 0
   m_Name: Intro
   m_TagString: Untagged
@@ -249,6 +250,20 @@ Transform:
   - {fileID: 604114286}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &379634643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379634641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0696d9b0321900458e621d166542223, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenShot2: {fileID: 21300000, guid: 3ad65e382b4bbd248ad191462d86ad47, type: 3}
+  image: {fileID: 990295282}
 --- !u!1 &604114285
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,7 +423,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e98427ae2f7f1b18289abefb32c24daf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 29d0c594310662f44988c828927d02ed, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -521,7 +536,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 91b1c1779fd7bb8abb0ca818a33044d4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a0ffce84f90882b408317d86841227ec, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -657,8 +672,8 @@ Camera:
   m_GameObject: {fileID: 1995504901}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
