@@ -1338,6 +1338,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PointInFrontOfPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 6734162727930293734, guid: 2327bc9380b927b29aa6971f2b58f559, type: 3}
+      propertyPath: invincibilityDuration
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8682656694094832895, guid: 2327bc9380b927b29aa6971f2b58f559, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
