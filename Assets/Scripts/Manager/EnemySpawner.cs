@@ -54,7 +54,7 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
     }
 
     void SpawnBarrel(){
-        float[] probabilities = [0.5f, 0.8f, 1f];
+        //float[] probabilities = [0.5f, 0.8f, 1f];
         this.enemyCount++;
         float playerAdvance = playerPos.position.z;
         float randomX, randomZ;
