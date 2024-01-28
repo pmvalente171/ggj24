@@ -170,6 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   spawnHeight: 15
+  itemToDrop: {fileID: 1022903711361548926, guid: 31ca748293d6576ab919d0af83f7e1c8, type: 3}
 --- !u!1 &2308371655620244418
 GameObject:
   m_ObjectHideFlags: 0
