@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 6094732612530977852}
   - component: {fileID: 4168815688282981180}
   - component: {fileID: 1765905190071184626}
+  - component: {fileID: 8912631570395247737}
   - component: {fileID: 644031802965186301}
   - component: {fileID: -3216235642248304954}
   - component: {fileID: 6734162727930293734}
@@ -271,6 +272,10 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   killStreakCounter: {fileID: 1765905190071184626}
+  scoreCounter: {fileID: 0}
+  enemyKillScore: 1000
+  headshotMultiplier: 2
+  killStreakMultiplier: 0.1
   _recoilAmmount: 0.15
 --- !u!114 &1765905190071184626
 MonoBehaviour:
@@ -282,6 +287,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8455e4cf091f8c0e6be4a62230db1d23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8912631570395247737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3604851185086583123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d6ede2e8cfbaa2d9aba1b9334cd6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &644031802965186301

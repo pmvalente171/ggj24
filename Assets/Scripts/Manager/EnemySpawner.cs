@@ -5,74 +5,98 @@ using GameArchitecture;
 
 public class EnemySpawner : GenericSingletonClass<EnemySpawner>
 {
-    [SerializeField] GameObject enemySpawnParent;
-    List<Transform> enemySpawnPoints = new List<Transform>();
-    int lastSpawnIndex = 0;
+
+    [SerializeField] Transform topLeft;
+
+    [SerializeField] Transform bottomRight;
+
+    [SerializeField] Transform playerPos;
+    
     public int enemyCount = 0;
     [SerializeField] int maxEnemyCount = 5;
 
+    [SerializeField] float numEnemiesIntervalImpact = 0.9f;
+
+    [SerializeField] private float baseSpawnInterval = 5f;
 
     [SerializeField] GameObject barrelEnemyPrefab;
-    [SerializeField] GameObject runnerEnemyPrefab;
-    [SerializeField] GameObject flyingEnemyPrefab;
 
+    private float left, right, top, bottom;
+
+    private Dictionary<int, Transform> enemies = new Dictionary<int, Transform>();
 
     void Start()
     {
-        foreach (Transform child in this.enemySpawnParent.GetComponentsInChildren<Transform>())
-        {
-            enemySpawnPoints.Add(child);
-        }
-
-        StartCoroutine(SpawnEnemyCoroutine());
+        left = topLeft.position.x;
+        right = bottomRight.position.x;
+        top = topLeft.position.z;
+        bottom = bottomRight.position.z;
+        StartCoroutine(SpawnBarrelCoroutine());
     }
 
-    private IEnumerator SpawnEnemyCoroutine()
+    private IEnumerator SpawnBarrelCoroutine()
     {
         while (true)
         {
-            if (this.enemyCount < this.maxEnemyCount)
-            {
-                float randomValue = Random.value;
-                if (randomValue <= 0.5f)
-                {
-                    SpawnEnemy(this.barrelEnemyPrefab);
-                }
-                else if(randomValue > 0.5f && randomValue <= 0.8f)
-                {
-                    SpawnEnemy(this.runnerEnemyPrefab);
-                }
-                else {
-                    SpawnEnemy(this.flyingEnemyPrefab);
-                }
+            if (this.enemyCount < this.maxEnemyCount){
+                SpawnBarrel();
             }
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(computeNextSpawnTime());
         }
     }
-
 
     void Update(){
-        if (Input.GetKeyDown(KeyCode.LeftControl) && (this.enemyCount < this.maxEnemyCount)){
-            SpawnEnemy(this.barrelEnemyPrefab);
+        if (Input.GetKeyDown(KeyCode.Y) && (this.enemyCount < this.maxEnemyCount)){
+            SpawnBarrel();
         }
     }
 
-    private int MakeSureItDoesntSpawnInTheSamePlaceTwice(int index)
-    {
-        int newIndex = (index + 1) % enemySpawnPoints.Count;
-        return newIndex;
+    void SpawnBarrel(){
+        //float[] probabilities = [0.5f, 0.8f, 1f];
+        this.enemyCount++;
+        float playerAdvance = playerPos.position.z;
+        float randomX, randomZ;
+        int tries = 3;
+        do {
+            randomX = Random.Range(left, right);
+            randomZ = playerAdvance + Random.Range(top, bottom);
+            tries--;
+        } while(isFarFromOtherEnemies(new Vector2(randomX, randomZ)) && tries > 0);
+        Vector3 randomSpawnPoint = new Vector3(randomX, 0, randomZ);
+        Vector2 spawnPointIn2D = new Vector2(randomSpawnPoint.x, randomSpawnPoint.z);
+        GameObject enemy = Instantiate(barrelEnemyPrefab, randomSpawnPoint, Quaternion.identity);
+        enemies.Add(enemy.GetInstanceID(), enemy.transform);
+        enemy.GetComponent<BarrelEnemy>().Spawn(spawnPointIn2D);
     }
 
-    void SpawnEnemy(GameObject enemyPrefab){
-        this.enemyCount++;
+    void SpawnMoving() {
 
-        int randomIndex = Random.Range(0, enemySpawnPoints.Count);
-        Vector3 randomSpawnPoint = enemySpawnPoints[MakeSureItDoesntSpawnInTheSamePlaceTwice(randomIndex)].position;
-        Vector2 spawnPointIn2D = new Vector2(randomSpawnPoint.x, randomSpawnPoint.z);
-        var enemy = Instantiate(enemyPrefab, randomSpawnPoint, Quaternion.identity);
-        enemy.GetComponent<Enemy>().Spawn(spawnPointIn2D);
+    }
 
-        this.lastSpawnIndex = randomIndex;
+    void SpawnFlying() {
+
+    }
+
+    private bool isFarFromOtherEnemies(Vector2 spawnPoint) {
+        float thresholdDistance = 7f;
+        foreach (Transform enemy in enemies.Values) {
+            float distance = Vector2.Distance(spawnPoint, new Vector2(enemy.position.x, enemy.position.z));
+            if (distance < thresholdDistance) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private float computeNextSpawnTime(){
+        float timer = baseSpawnInterval * Mathf.Pow(numEnemiesIntervalImpact, (maxEnemyCount - enemyCount) - 1);
+        Debug.Log("Next spawn time is " + timer);
+        return timer;
+    }
+
+    public void notifyEnemyDeath(GameObject enemy){
+        this.enemyCount--;
+        this.enemies.Remove(enemy.GetInstanceID());
     }
 
 }

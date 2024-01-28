@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] int initialHealth = 3;
-    int currentHealth;
+    public int currentHealth;
+
     [SerializeField] private float invincibilityDuration = 1f; // Duration of invincibility in seconds
     private bool isInvincible = false;
 

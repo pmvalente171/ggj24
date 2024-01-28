@@ -26,13 +26,13 @@ public class PlayerMov : MonoBehaviour
     * staminaBalance at 0 means the player can't rotate clockwise.
     * staminaBalance at 1 means the player can't rotate counterclockwise.
     */
-    [SerializeField] private float staminaBalance = 0.5f;
+    public float staminaBalance = 0.5f;
 
     [SerializeField] private KillStreakCounter killStreakCounter;
 
-    [SerializeField] private float killStreakImpact = 0.1f;
+    [SerializeField] private float killStreakImpact = 0.0015f;
 
-    
+
     private Rigidbody _rigidbody;
     private float _leftFootMomentum;
     private float _rightFootMomentum;
@@ -60,35 +60,33 @@ public class PlayerMov : MonoBehaviour
         
         _leftFootFlag = 0;
         _rightFootFlag = 0;
-
-        float rotationSpeedIncrease = startRotationSpeed + KillStreakCounter.getKillStreak() * killStreakImpact;
         
         if (Input.GetKey(KeyCode.W))
         {
             staminaBalance += staminaChange * Time.deltaTime;
             leftFootMomentum -= staminaBalance >= 1 ? 0 
-            : rotationSpeedIncrease * Time.deltaTime * 60f;
+            : startRotationSpeed * Time.deltaTime * 60f;
             _leftFootFlag = 1;
         }
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             staminaBalance -= staminaChange * Time.deltaTime;
             leftFootMomentum += staminaBalance <= 0 ? 0 
-            : rotationSpeedIncrease * Time.deltaTime * 60f;
+            : startRotationSpeed * Time.deltaTime * 60f;
             _leftFootFlag = -1;
         }
         if (Input.GetKey(KeyCode.O))
         {
             staminaBalance -= staminaChange * Time.deltaTime;
             rightFootMomentum += staminaBalance <= 0 ? 0 
-            : rotationSpeedIncrease * Time.deltaTime * 60f;
+            : startRotationSpeed * Time.deltaTime * 60f;
             _rightFootFlag = 1;
         }
-        if (Input.GetKey(KeyCode.K) || Input.GetKey(KeyCode.J))
+        if (Input.GetKey(KeyCode.K))
         {
             staminaBalance += staminaChange * Time.deltaTime;
             rightFootMomentum -= staminaBalance >= 1 ? 0 
-            : rotationSpeedIncrease * Time.deltaTime * 60f;
+            : startRotationSpeed * Time.deltaTime * 60f;
             _rightFootFlag = -1;
         }
 
