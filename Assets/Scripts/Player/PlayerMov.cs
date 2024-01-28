@@ -68,7 +68,7 @@ public class PlayerMov : MonoBehaviour
             : startRotationSpeed * Time.deltaTime * 60f;
             _leftFootFlag = 1;
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             staminaBalance -= staminaChange * Time.deltaTime;
             leftFootMomentum += staminaBalance <= 0 ? 0 

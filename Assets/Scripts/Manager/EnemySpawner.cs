@@ -11,8 +11,6 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
     [SerializeField] Transform bottomRight;
 
     [SerializeField] Transform playerPos;
-
-    //[SerializeField] Transform playerPos;
     
     public int enemyCount = 0;
     [SerializeField] int maxEnemyCount = 5;
@@ -76,7 +74,7 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
     }
 
     void SpawnFlying() {
-        
+
     }
 
     private bool isFarFromOtherEnemies(Vector2 spawnPoint) {
