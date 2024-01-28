@@ -26,7 +26,7 @@ public class PlayerMov : MonoBehaviour
     * staminaBalance at 0 means the player can't rotate clockwise.
     * staminaBalance at 1 means the player can't rotate counterclockwise.
     */
-    [SerializeField] private float staminaBalance = 0.5f;
+    public float staminaBalance = 0.5f;
     
     private Rigidbody _rigidbody;
     private float _leftFootMomentum;
