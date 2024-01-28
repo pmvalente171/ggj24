@@ -19,7 +19,7 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
 
     [SerializeField] private float baseSpawnInterval = 5f;
 
-    [SerializeField] GameObject barrelEnemyPrefab;
+    private SpawnLocator[] spawnLocators;
 
     private float left, right, top, bottom;
 
@@ -31,56 +31,59 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
         right = bottomRight.position.x;
         top = topLeft.position.z;
         bottom = bottomRight.position.z;
-        StartCoroutine(SpawnBarrelCoroutine());
+        SpawnLocator barrelSpawner = GetComponent<BarrelSpawner>();
+        SpawnLocator runningSpawner = GetComponent<RunningSpawner>();
+        SpawnLocator flyingSpawner = GetComponent<FlyingSpawner>();
+        spawnLocators = new SpawnLocator[] {barrelSpawner, runningSpawner, flyingSpawner};
+        
+        StartCoroutine(SpawnCoroutine());
     }
 
-    private IEnumerator SpawnBarrelCoroutine()
+    private IEnumerator SpawnCoroutine()
     {
+
         while (true)
         {
+            float timer = computeNextSpawnTime();
+            print(this.enemyCount + " enemies " + timer);
+            yield return new WaitForSeconds(timer);
             if (this.enemyCount < this.maxEnemyCount){
-                SpawnBarrel();
+                Spawn();
             }
-            yield return new WaitForSeconds(computeNextSpawnTime());
         }
     }
 
     void Update(){
         if (Input.GetKeyDown(KeyCode.Y) && (this.enemyCount < this.maxEnemyCount)){
-            SpawnBarrel();
+            Spawn();
         }
     }
 
-    void SpawnBarrel(){
-        //float[] probabilities = [0.5f, 0.8f, 1f];
+    void Spawn(){
+        float[] probabilities = {0.75f, 0.9f, 1f};
+        float random = Random.Range(0f, 1f);
+        int index = 0;
+        while (random > probabilities[index]){
+            index++;
+        }
         this.enemyCount++;
         float playerAdvance = playerPos.position.z;
-        float randomX, randomZ;
+        Vector3 randomSpawnPoint;
         int tries = 3;
         do {
-            randomX = Random.Range(left, right);
-            randomZ = playerAdvance + Random.Range(top, bottom);
+            randomSpawnPoint = spawnLocators[index].ComputeSpawnLocation(playerAdvance);
             tries--;
-        } while(isFarFromOtherEnemies(new Vector2(randomX, randomZ)) && tries > 0);
-        Vector3 randomSpawnPoint = new Vector3(randomX, 0, randomZ);
-        Vector2 spawnPointIn2D = new Vector2(randomSpawnPoint.x, randomSpawnPoint.z);
-        GameObject enemy = Instantiate(barrelEnemyPrefab, randomSpawnPoint, Quaternion.identity);
+        } while(isFarFromOtherEnemies(randomSpawnPoint) && tries > 0);
+        //GameObject enemy = Instantiate(barrelEnemyPrefab, randomSpawnPoint, Quaternion.identity);
+        GameObject enemy = Instantiate(spawnLocators[index].GetPrefab(), randomSpawnPoint, Quaternion.identity);
         enemies.Add(enemy.GetInstanceID(), enemy.transform);
-        enemy.GetComponent<BarrelEnemy>().Spawn(spawnPointIn2D);
+        enemy.GetComponent<Enemy>().Spawn(randomSpawnPoint);
     }
 
-    void SpawnMoving() {
-
-    }
-
-    void SpawnFlying() {
-
-    }
-
-    private bool isFarFromOtherEnemies(Vector2 spawnPoint) {
+    public bool isFarFromOtherEnemies(Vector3 spawnPoint) {
         float thresholdDistance = 7f;
         foreach (Transform enemy in enemies.Values) {
-            float distance = Vector2.Distance(spawnPoint, new Vector2(enemy.position.x, enemy.position.z));
+            float distance = Vector3.Distance(spawnPoint, enemy.position);
             if (distance < thresholdDistance) {
                 return false;
             }
