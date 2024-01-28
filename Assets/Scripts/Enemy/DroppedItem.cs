@@ -20,6 +20,7 @@ public class DroppedItem : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        ScoreCounter.addScore(250);
         Destroy(this.gameObject);
     }
 }

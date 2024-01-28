@@ -585,6 +585,7 @@ GameObject:
   - component: {fileID: 8009993907097935244}
   - component: {fileID: 501542711975336652}
   - component: {fileID: 6074892494877678705}
+  - component: {fileID: 8752256237517800922}
   m_Layer: 5
   m_Name: KillStreakBar
   m_TagString: Untagged
@@ -652,6 +653,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8752256237517800922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5451635277801505814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2750d3c2ab14455b4d97e40d6c8ce23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6570273221824534867
 GameObject:
   m_ObjectHideFlags: 0
