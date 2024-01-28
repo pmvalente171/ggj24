@@ -54,6 +54,7 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
     }
 
     void SpawnBarrel(){
+        float[] probabilities = [0.5f, 0.8f, 1f];
         this.enemyCount++;
         float playerAdvance = playerPos.position.z;
         float randomX, randomZ;
@@ -71,7 +72,7 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
     }
 
     private bool isFarFromOtherEnemies(Vector2 spawnPoint) {
-        float thresholdDistance = 5f;
+        float thresholdDistance = 7f;
         foreach (Transform enemy in enemies.Values) {
             float distance = Vector2.Distance(spawnPoint, new Vector2(enemy.position.x, enemy.position.z));
             if (distance < thresholdDistance) {
