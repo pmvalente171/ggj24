@@ -31,18 +31,18 @@ public class StaminaBarUI : MonoBehaviour
         int dir = 1;
         if (Mathf.Abs(_playerMovement.staminaBalance - 0.5f) >= 0.2f)
         {
-            IconImage.sprite = fallingTexture;
+            //IconImage.sprite = fallingTexture;
             dir = _playerMovement.staminaBalance > 0.5f ? 1 : -1;
         }
         else
         {
-            IconImage.sprite = _defaultTexture;
+            //IconImage.sprite = _defaultTexture;
             dir = _playerMovement.staminaBalance > 0.5f ? 1 : -1;
         }
         
         // flip the icon according to the direction
         var localScale = Icon.localScale;
-        localScale = new Vector2(_defaultIconScale.x * dir, _defaultIconScale.y);
+        localScale = new Vector3(_defaultIconScale.x * dir, _defaultIconScale.y, 0.1f);
         Icon.localScale = localScale;
 
         float staminaBalance = 1 - _playerMovement.staminaBalance;
