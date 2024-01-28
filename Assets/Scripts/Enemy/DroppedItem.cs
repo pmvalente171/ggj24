@@ -10,6 +10,7 @@ public class DroppedItem : MonoBehaviour, IDamageable
         {
             Debug.Log("Player touched the dropped item!");
             Destroy(this.gameObject);
+            ScoreCounter.addScore(500);
         }
         else if (other.GetComponent<Enemy>() != null)
         {
@@ -24,4 +25,4 @@ public class DroppedItem : MonoBehaviour, IDamageable
         Destroy(this.gameObject);
     }
 }
-    
+
