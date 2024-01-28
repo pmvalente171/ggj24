@@ -6,6 +6,8 @@ using UnityEngine;
 public class BarrelEnemy : Enemy
 {
     [SerializeField] private float spawnHeight = 15f;
+    [SerializeField] private GameObject itemToDrop;
+    [SerializeField] private float likelihoodOfDrop = 0.5f;
 
     public void Spawn(Vector2 topDownPosition)
     {
@@ -16,7 +18,13 @@ public class BarrelEnemy : Enemy
 
     public override void Die()
     {
-        Debug.Log("Die of child called..");
+        Debug.Log("Die of barrel called..");
+        if (this.itemToDrop != null) {
+            float random = Random.Range(0f, 1f);
+            if (random <= this.likelihoodOfDrop){
+                Instantiate(itemToDrop, this.transform.position, Quaternion.identity);
+            }
+        }
         base.Die();
     }
 

@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour, IDamageable
 
     public virtual void TakeDamage(int damage)
     {
+        ScoreCounter.addScore(500);
         Destroy(this.gameObject);
     }
 

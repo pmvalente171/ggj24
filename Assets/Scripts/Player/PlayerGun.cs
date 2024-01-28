@@ -28,6 +28,7 @@ namespace Player
 
         [SerializeField] private float killStreakMultiplier = 0.1f;
 
+
         private bool _isRecoiling;
         public float _recoilAmmount;
         
@@ -44,7 +45,7 @@ namespace Player
             });
             _isRecoiling = false;
         }
-        
+            
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space) && !_isRecoiling)
@@ -55,17 +56,20 @@ namespace Player
                     new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
 
                 Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
-
                 if (Physics.Raycast(ray, out var hit))
                 {   
                     var damageableComponent = hit.collider.GetComponent<IDamageable>();
+                    var isEnemy = damageableComponent is EnemyHead || damageableComponent is Enemy;
                     if (damageableComponent != null)
                     {
                         damageableComponent.TakeDamage(1);
-                        int killStreak = KillStreakCounter.increaseKillStreak();
-                        int killMultiplier = damageableComponent is EnemyHead ? headshotMultiplier : 1;
-                        ScoreCounter.addScore((int) (killMultiplier * enemyKillScore * (1 + (killStreak - 1) * killStreakMultiplier)));
+                        if (isEnemy){
+                            int killStreak = KillStreakCounter.increaseKillStreak();
+                            int killMultiplier = damageableComponent is EnemyHead ? headshotMultiplier : 1;
+                            ScoreCounter.addScore((int) (killMultiplier * enemyKillScore * (1 + (killStreak - 1) * killStreakMultiplier)));
+                        }
                     }
+                    // other items handle their own score on their TakeDamage methods
                 } else
                 {
                     KillStreakCounter.resetKillStreak();
