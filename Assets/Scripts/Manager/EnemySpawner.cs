@@ -71,6 +71,14 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
         enemy.GetComponent<BarrelEnemy>().Spawn(spawnPointIn2D);
     }
 
+    void SpawnMoving() {
+
+    }
+
+    void SpawnFlying() {
+        
+    }
+
     private bool isFarFromOtherEnemies(Vector2 spawnPoint) {
         float thresholdDistance = 7f;
         foreach (Transform enemy in enemies.Values) {
