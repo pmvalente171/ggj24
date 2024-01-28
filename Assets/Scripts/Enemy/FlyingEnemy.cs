@@ -9,7 +9,7 @@ public class FlyingEnemy : Enemy
     public float hoverAmplitude = 0.5f; 
     public float hoverFrequency = 1f; 
     public float desiredDistance = 10f; 
-    public float rotationSpeed = 2f; // Speed at which the enemy rotates towards the player
+    public float rotationSpeed = 2f;
 
     private void Start()
     {
@@ -17,18 +17,13 @@ public class FlyingEnemy : Enemy
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
-
-        // Set the initial rotation to look at the player
-        Vector3 directionToPlayer = player.position - transform.position;
-        Quaternion initialRotation = Quaternion.LookRotation(directionToPlayer);
-        transform.rotation = initialRotation;
     }
 
     private void Update()
     {
         Hover();
         MaintainDistance();
-        RotateTowardsPlayer();
+        RotateTowardsPlayer(); // Call this method to align at the start
     }
 
     private void Hover()
@@ -51,10 +46,18 @@ public class FlyingEnemy : Enemy
 
     private void RotateTowardsPlayer()
     {
-        Vector3 direction = player.position - transform.position;
-        direction.y = 0; // Keep the rotation only on the Y axis
+        // Calculate the horizontal direction to the player
+        Vector3 direction = new Vector3(
+            player.position.x - transform.position.x,
+            0f, // Zero out the y component
+            player.position.z - transform.position.z
+        );
 
+        // Create a rotation based on the horizontal direction
         Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+        // Rotate the enemy
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
+
 }

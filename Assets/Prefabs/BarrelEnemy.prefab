@@ -403,6 +403,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_gun
       objectReference: {fileID: 0}
+    - target: {fileID: 4259060499044967990, guid: b445f79cc5b2b18439fe5079e70df834, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

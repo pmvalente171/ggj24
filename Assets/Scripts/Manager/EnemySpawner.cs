@@ -14,6 +14,7 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
 
     [SerializeField] GameObject barrelEnemyPrefab;
     [SerializeField] GameObject runnerEnemyPrefab;
+    [SerializeField] GameObject flyingEnemyPrefab;
 
 
     void Start()
@@ -33,13 +34,16 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
             if (this.enemyCount < this.maxEnemyCount)
             {
                 float randomValue = Random.value;
-                if (randomValue <= 0.75f)
+                if (randomValue <= 0.5f)
                 {
                     SpawnEnemy(this.barrelEnemyPrefab);
                 }
-                else
+                else if(randomValue > 0.5f && randomValue <= 0.8f)
                 {
                     SpawnEnemy(this.runnerEnemyPrefab);
+                }
+                else {
+                    SpawnEnemy(this.flyingEnemyPrefab);
                 }
             }
             yield return new WaitForSeconds(5f);
@@ -53,13 +57,10 @@ public class EnemySpawner : GenericSingletonClass<EnemySpawner>
         }
     }
 
-    private int MakeSureItDoesntSpawnInTheSamePlaceTwice(int index){
-        if (index == this.lastSpawnIndex){
-            return index + 1;
-        }
-        else {
-            return index;
-        }
+    private int MakeSureItDoesntSpawnInTheSamePlaceTwice(int index)
+    {
+        int newIndex = (index + 1) % enemySpawnPoints.Count;
+        return newIndex;
     }
 
     void SpawnEnemy(GameObject enemyPrefab){
