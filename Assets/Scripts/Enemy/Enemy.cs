@@ -24,4 +24,10 @@ public class Enemy : MonoBehaviour, IDamageable
         EnemySpawner.Instance.notifyEnemyDeath(this.gameObject);
         Destroy(this.gameObject);
     }
+
+    public virtual void Spawn(Vector2 topDownPosition){
+        this.gameObject.SetActive(true);
+        Vector3 spawnPosition = new Vector3(topDownPosition.x, 1, topDownPosition.y);
+        this.transform.position = spawnPosition;
+    }
 }
