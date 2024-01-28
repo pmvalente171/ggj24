@@ -19,10 +19,13 @@ public class RunnerEnemy : Enemy
     [SerializeField] private float bumpForce = 20f;
     private float xScale;
     [SerializeField] private Transform transformToFlip; // sorry
+    private Rigidbody rb;
+
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        rb = GetComponent<Rigidbody>();
 
         Transform firstGoalTransform = player.Find("PointInFrontOfPlayer");
 
@@ -97,7 +100,7 @@ public class RunnerEnemy : Enemy
         combinedDirection.Normalize(); // Ensure the combined vector is normalized
 
         // Move the enemy
-        transform.position += combinedDirection * speed * Time.deltaTime;
+        rb.velocity = combinedDirection * speed;
 
         // Enhanced LookAt with strafe effect
         Vector3 lookAtDirection = forwardDirection + strafeDirection * strafeRotationFactor;
