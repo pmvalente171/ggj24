@@ -18,7 +18,7 @@ namespace Player
         
         private float _leftFootMomentum;
         private float _rightFootMomentum;
-        
+
         public void SetFlag(Vector2Int flag)
         {
             if (flag.x == 0 && flag.y == 0) return;
@@ -59,10 +59,11 @@ namespace Player
                 (_leftFootMomentum + _rightFootMomentum) / 2f * maxCameraRotationZ), lookDecayRate);
             cameraTransform.localRotation = localRotation;
         }
-        
+
         private void LateUpdate()
         {
             AddRotation(_cameraRotationX * lookSpeed);
         }
+
     }
 }
